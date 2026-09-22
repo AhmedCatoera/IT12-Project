@@ -91,8 +91,8 @@ class ProductionController extends Controller
             ->orderBy('scheduled_date', 'asc')
             ->get();
 
-        // Active bakers
-        $bakers = User::where('role', 'baker')
+        // Active staff members who can be assigned
+        $bakers = User::whereIn('role', ['owner', 'staff'])
             ->where('is_active', true)
             ->orderBy('first_name', 'asc')
             ->get();
@@ -120,7 +120,7 @@ class ProductionController extends Controller
 
             $production = Production::create([
                 'order_id' => $order->id,
-                'assigned_baker_id' => $validated['assigned_baker_id'] ?? (Auth::user()->isBaker() ? Auth::id() : null),
+                'assigned_baker_id' => $validated['assigned_baker_id'] ?? (Auth::user()->isStaff() || Auth::user()->isOwner() ? Auth::id() : null),
                 'production_date' => $validated['production_date'],
                 'status' => $autoStart ? 'in_progress' : 'pending',
                 'started_at' => $autoStart ? now() : null,

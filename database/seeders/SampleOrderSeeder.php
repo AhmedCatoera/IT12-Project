@@ -20,7 +20,7 @@ class SampleOrderSeeder extends Seeder
     public function run(): void
     {
         $staff = User::where('role', 'staff')->first();
-        $baker = User::where('role', 'baker')->first();
+        $baker = $staff; // No separate baker role — staff handles production
 
         // 1. Create Sample Customers
         $customer1 = Customer::firstOrCreate(

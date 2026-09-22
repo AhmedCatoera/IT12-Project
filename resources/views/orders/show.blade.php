@@ -424,7 +424,7 @@
             <div style="font-size: 1.15rem; font-weight: 800;">
                 👩‍🍳 Kitchen Production & Baking Status
             </div>
-            @if(Auth::user()->isOwner() || Auth::user()->isBaker() || Auth::user()->isStaff())
+            @if(Auth::user()->isOwner() || Auth::user()->isStaff())
                 @if($order->productions->isEmpty() || !$order->productions->contains('status', 'in_progress'))
                 <a href="{{ route('productions.create', ['order_id' => $order->id]) }}" class="btn-primary" style="font-size: 0.8rem; padding: 6px 12px;">
                     ➕ Schedule Baking Batch

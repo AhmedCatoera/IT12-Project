@@ -16,8 +16,6 @@ class InventoryManagementTest extends TestCase
 
     protected User $owner;
     protected User $staff;
-    protected User $baker;
-    protected User $delivery;
 
     protected function setUp(): void
     {
@@ -40,27 +38,9 @@ class InventoryManagementTest extends TestCase
             'role' => 'staff',
             'is_active' => true,
         ]);
-
-        $this->baker = User::create([
-            'first_name' => 'Carlos',
-            'last_name' => 'Mendoza',
-            'email' => 'baker@sweetnest.com',
-            'password' => Hash::make('password'),
-            'role' => 'baker',
-            'is_active' => true,
-        ]);
-
-        $this->delivery = User::create([
-            'first_name' => 'Danilo',
-            'last_name' => 'Torres',
-            'email' => 'delivery@sweetnest.com',
-            'password' => Hash::make('password'),
-            'role' => 'delivery',
-            'is_active' => true,
-        ]);
     }
 
-    public function test_staff_and_baker_can_view_inventory_dashboard_and_low_stock_alerts(): void
+    public function test_staff_and_owner_can_view_inventory_dashboard_and_low_stock_alerts(): void
     {
         Ingredient::create([
             'name' => 'All-Purpose Flour',
@@ -85,7 +65,7 @@ class InventoryManagementTest extends TestCase
         $response->assertSee('Reorder Needed');
 
         // Test filter low stock only
-        $filterResponse = $this->actingAs($this->baker)->get(route('inventory.index', ['filter' => 'low_stock']));
+        $filterResponse = $this->actingAs($this->owner)->get(route('inventory.index', ['filter' => 'low_stock']));
         $filterResponse->assertStatus(200);
         $filterResponse->assertSee('All-Purpose Flour');
         $filterResponse->assertDontSee('Granulated Sugar');
@@ -200,12 +180,12 @@ class InventoryManagementTest extends TestCase
             ],
         ];
 
-        $response = $this->actingAs($this->baker)->post(route('audits.store'), $auditData);
+        $response = $this->actingAs($this->staff)->post(route('audits.store'), $auditData);
 
         $audit = InventoryAudit::first();
         $this->assertNotNull($audit);
         $this->assertEquals('morning', $audit->audit_shift);
-        $this->assertEquals($this->baker->id, $audit->conducted_by);
+        $this->assertEquals($this->staff->id, $audit->conducted_by);
 
         $response->assertRedirect(route('audits.show', $audit));
 
@@ -262,15 +242,12 @@ class InventoryManagementTest extends TestCase
         $response->assertSee('All-Purpose Flour');
     }
 
-    public function test_unauthorized_delivery_role_cannot_access_inventory_or_audits(): void
+    public function test_unauthenticated_guests_are_redirected_to_login(): void
     {
-        $this->actingAs($this->delivery)->get(route('inventory.index'))->assertStatus(403);
-        $this->actingAs($this->delivery)->get(route('inventory.stockIn'))->assertStatus(403);
-        $this->actingAs($this->delivery)->get(route('audits.index'))->assertStatus(403);
-        $this->actingAs($this->delivery)->get(route('audits.create'))->assertStatus(403);
-        $this->actingAs($this->delivery)->post(route('inventory.storeStockIn'), [])->assertStatus(403);
+        $response = $this->get(route('inventory.index'));
+        $response->assertRedirect(route('login'));
 
-        $this->app['auth']->logout();
-        $this->get(route('inventory.index'))->assertRedirect(route('login'));
+        $response = $this->get(route('audits.index'));
+        $response->assertRedirect(route('login'));
     }
 }

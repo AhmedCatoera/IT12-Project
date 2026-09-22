@@ -180,14 +180,14 @@
                 @endif
             </div>
 
-            <!-- Assigned Baker -->
+            <!-- Assigned Staff -->
             <div class="form-group">
-                <label class="form-label" for="assigned_baker_id">Assigned Baker</label>
+                <label class="form-label" for="assigned_baker_id">Assigned Staff</label>
                 <select id="assigned_baker_id" name="assigned_baker_id" class="form-select @error('assigned_baker_id') input-error @enderror">
-                    <option value="">-- Select Baker (Optional) --</option>
+                    <option value="">-- Select Staff (Optional) --</option>
                     @foreach($bakers as $baker)
-                        <option value="{{ $baker->id }}" {{ old('assigned_baker_id', Auth::user()->isBaker() ? Auth::id() : '') == $baker->id ? 'selected' : '' }}>
-                            👩‍🍳 {{ $baker->name }} ({{ $baker->email }})
+                        <option value="{{ $baker->id }}" {{ old('assigned_baker_id', Auth::id()) == $baker->id ? 'selected' : '' }}>
+                            👤 {{ $baker->name }} ({{ ucfirst($baker->role) }})
                         </option>
                     @endforeach
                 </select>

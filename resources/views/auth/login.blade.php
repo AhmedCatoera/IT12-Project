@@ -239,8 +239,6 @@
                     <br>
                     <span class="account-pill" onclick="fillCreds('owner@sweetnest.com')">👑 Owner</span>
                     <span class="account-pill" onclick="fillCreds('staff@sweetnest.com')">📋 Staff</span>
-                    <span class="account-pill" onclick="fillCreds('baker@sweetnest.com')">🧑‍🍳 Baker</span>
-                    <span class="account-pill" onclick="fillCreds('delivery@sweetnest.com')">🛵 Delivery</span>
                 </div>
             </div>
         </div>
