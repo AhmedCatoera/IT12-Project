@@ -1,0 +1,69 @@
+{
+  "node_modules/leaflet/dist/images/layers-2x.png": {
+    "file": "assets/layers-2x-Bpkbi35X.png",
+    "src": "node_modules/leaflet/dist/images/layers-2x.png"
+  },
+  "node_modules/leaflet/dist/images/layers.png": {
+    "file": "assets/layers-BWBAp2CZ.png",
+    "src": "node_modules/leaflet/dist/images/layers.png"
+  },
+  "node_modules/leaflet/dist/images/marker-icon.png": {
+    "file": "assets/marker-icon-hN30_KVU.png",
+    "src": "node_modules/leaflet/dist/images/marker-icon.png"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-CdSawND1.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/fonts/inter-400.woff2": {
+    "file": "assets/inter-400-C38fXH4l.woff2",
+    "src": "resources/fonts/inter-400.woff2"
+  },
+  "resources/fonts/inter-500.woff2": {
+    "file": "assets/inter-500-Cerq10X2.woff2",
+    "src": "resources/fonts/inter-500.woff2"
+  },
+  "resources/fonts/inter-600.woff2": {
+    "file": "assets/inter-600-LgqL8muc.woff2",
+    "src": "resources/fonts/inter-600.woff2"
+  },
+  "resources/fonts/inter-700.woff2": {
+    "file": "assets/inter-700-Yt3aPRUw.woff2",
+    "src": "resources/fonts/inter-700.woff2"
+  },
+  "resources/fonts/inter-ext-400.woff2": {
+    "file": "assets/inter-ext-400-C1nco2VV.woff2",
+    "src": "resources/fonts/inter-ext-400.woff2"
+  },
+  "resources/fonts/inter-ext-500.woff2": {
+    "file": "assets/inter-ext-500-CV4jyFjo.woff2",
+    "src": "resources/fonts/inter-ext-500.woff2"
+  },
+  "resources/fonts/inter-ext-600.woff2": {
+    "file": "assets/inter-ext-600-D2bJ5OIk.woff2",
+    "src": "resources/fonts/inter-ext-600.woff2"
+  },
+  "resources/fonts/inter-ext-700.woff2": {
+    "file": "assets/inter-ext-700-Ca8adRJv.woff2",
+    "src": "resources/fonts/inter-ext-700.woff2"
+  },
+  "resources/js/app.jsx": {
+    "file": "assets/app-D16_j6kB.js",
+    "name": "app",
+    "src": "resources/js/app.jsx",
+    "isEntry": true,
+    "css": [
+      "assets/app-CLLlcC51.css"
+    ],
+    "assets": [
+      "assets/layers-BWBAp2CZ.png",
+      "assets/layers-2x-Bpkbi35X.png",
+      "assets/marker-icon-hN30_KVU.png"
+    ]
+  }
+}

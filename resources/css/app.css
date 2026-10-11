@@ -1,0 +1,300 @@
+/* ==========================================================================
+   SweetNest OIMS - Tailwind CSS entry point.
+
+   Pages are styled with Tailwind utility classes. This file holds:
+   1. the theme (the bakery palette, type scale, radii and shadows),
+   2. base styles (fonts, links, icons),
+   3. a components layer for the pieces every page repeats: buttons, inputs,
+      cards, tables, badges, tabs, modals, alerts. Each is written with @apply so
+      it reads like the utilities it is made of.
+   Vite compiles this into public/build (npm run build).
+   ========================================================================== */
+
+@import "tailwindcss";
+
+/* Inter is bundled (latin + latin-ext for the peso sign) so pages look the same with or without internet. */
+@font-face { font-family: "Inter"; font-weight: 400; font-display: swap; src: url("../fonts/inter-400.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Inter"; font-weight: 400; font-display: swap; src: url("../fonts/inter-ext-400.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C0, U+2113; }
+@font-face { font-family: "Inter"; font-weight: 500; font-display: swap; src: url("../fonts/inter-500.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Inter"; font-weight: 500; font-display: swap; src: url("../fonts/inter-ext-500.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C0, U+2113; }
+@font-face { font-family: "Inter"; font-weight: 600; font-display: swap; src: url("../fonts/inter-600.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Inter"; font-weight: 600; font-display: swap; src: url("../fonts/inter-ext-600.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C0, U+2113; }
+@font-face { font-family: "Inter"; font-weight: 700; font-display: swap; src: url("../fonts/inter-700.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Inter"; font-weight: 700; font-display: swap; src: url("../fonts/inter-ext-700.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C0, U+2113; }
+
+/* ---------- 1. Theme: the only colors, sizes and shadows the pages use ---------- */
+@theme {
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Warm bakery palette */
+  --color-cream: #f8f3ec;
+  --color-surface: #ffffff;
+  --color-surface-2: #fbf8f3;
+  --color-surface-3: #f3ede4;
+  --color-ink: #2a1f1d;
+  --color-ink-2: #6b5f5b;
+  --color-ink-3: #a2968f;
+  --color-line: #ece4d9;
+  --color-line-strong: #d9cfc2;
+
+  --color-brand: #c4204f;
+  --color-brand-hover: #a3183f;
+  --color-brand-soft: #fdeef2;
+  --color-brand-light: #e2386c;
+  --color-brand-pink: #ff8fb0;
+  --color-brand-ring: rgba(196, 32, 79, 0.18);
+  --color-gold: #d99a2b;
+  --color-gold-soft: #fbf1dc;
+
+  /* Dark sidebar */
+  --color-side: #2a1a21;
+  --color-side-2: #3a2530;
+  --color-side-deep: #241419;
+  --color-side-text: #ecdfe3;
+  --color-side-muted: #a99098;
+  --color-side-active: #4a2837;
+
+  /* Status tones */
+  --color-success: #1f7a45;  --color-success-soft: #e2f5e9;
+  --color-warning: #9a6508;  --color-warning-soft: #fdf1d6;
+  --color-danger: #b42332;   --color-danger-soft: #fde5e7;
+  --color-info: #1f57b8;     --color-info-soft: #e3ecfc;
+  --color-violet: #6b34c9;   --color-violet-soft: #eee6fb;
+  --color-orange: #bf4a12;   --color-orange-soft: #fde9dc;
+
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Type scale (text-xs ... text-xl) */
+  --text-*: initial;
+  --text-2xs: 11px;
+  --text-xs: 12.5px;
+  --text-sm: 13px;
+  --text-base: 14px;
+  --text-md: 15px;
+  --text-lg: 17px;
+  --text-xl: 19px;
+  --text-2xl: 25px;
+  --text-3xl: 32px;
+
+  --radius-sm: 9px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 16px;
+
+  --shadow-card: 0 1px 2px rgba(60, 40, 30, 0.05), 0 4px 14px -6px rgba(60, 40, 30, 0.08);
+  --shadow-lift: 0 12px 28px -14px rgba(60, 40, 30, 0.35);
+  --shadow-pop: 0 24px 60px -18px rgba(42, 26, 33, 0.35);
+  --shadow-menu: 0 14px 34px -14px rgba(31, 21, 17, 0.4);
+
+  --animate-modal-in: modal-in .18s ease-out;
+  --animate-just-filled: just-filled 1.6s ease;
+
+  @keyframes modal-in { from { opacity: 0; transform: translateY(8px) scale(.985); } to { opacity: 1; transform: none; } }
+  @keyframes just-filled { 0% { background: var(--color-gold-soft); border-color: var(--color-gold); } 100% { background: var(--color-surface); } }
+}
+
+/* The phone menu: <body class="nav-open"> slides the sidebar in (see ui.js). */
+@custom-variant nav-open (&:where(.nav-open, .nav-open *));
+
+/* ---------- 2. Base ---------- */
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body { @apply bg-cream font-sans text-base text-ink antialiased; }
+  a { @apply text-brand no-underline hover:underline; }
+  svg.icon { @apply size-[18px] shrink-0; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  ::selection { @apply bg-brand-soft; }
+  h1, h2, h3 { line-height: 1.25; }
+  input, select, textarea, button { font: inherit; color: inherit; }
+  /* Preflight zeroes form-control margins; keep the browser's usual spacing around ticks and radios */
+  input[type="checkbox"], input[type="radio"] { margin: 3px 3px 0 5px; }
+}
+
+/* ---------- 3. Components: the pieces every page repeats ---------- */
+@layer components {
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-[7px] whitespace-nowrap rounded-md border border-line-strong bg-surface px-[15px] py-[9px] text-[13.5px] leading-[1.2] font-semibold text-ink no-underline cursor-pointer;
+    @apply transition-[background,border-color,box-shadow,transform] duration-150 hover:bg-surface-2 hover:border-[#c9bdad] hover:no-underline active:translate-y-px focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-ring;
+  }
+  .btn-primary { @apply border-brand-hover bg-linear-to-b from-[#d2285b] to-brand text-white shadow-[0_6px_14px_-8px_rgba(196,32,79,0.8)] hover:from-brand hover:to-brand-hover hover:border-brand-hover; }
+  .btn-danger { @apply border-[#f3b3ba] bg-surface text-danger hover:bg-danger-soft hover:border-[#e58a94]; }
+  .btn-success { @apply border-[#9fdcb5] bg-surface text-success hover:bg-success-soft; }
+  .btn-ghost { @apply border-transparent bg-transparent text-ink-2 hover:bg-surface-3 hover:text-ink hover:border-transparent; }
+  .btn-sm { @apply rounded-[8px] px-[11px] py-1.5 text-xs; }
+  .btn-block { @apply w-full; }
+  .btn[disabled], .btn.is-loading { @apply pointer-events-none opacity-60; }
+  .link-btn { @apply cursor-pointer border-0 bg-transparent p-0 font-medium text-brand hover:underline; }
+  .link-btn.danger { @apply text-danger; }
+
+  /* Form fields */
+  .field { @apply mb-[15px] last:mb-0; }
+  .label { @apply mb-1.5 block text-sm font-semibold; }
+  .label .opt { @apply font-normal text-ink-3; }
+  .input, .select, .textarea {
+    @apply w-full rounded-sm border border-line-strong bg-surface px-3 py-[9px] text-ink transition-[border-color,box-shadow] duration-150;
+    @apply placeholder:text-ink-3 focus:outline-none focus:border-brand focus:ring-[3px] focus:ring-brand-ring;
+  }
+  .select { @apply appearance-none bg-no-repeat pr-[34px]; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b5f5b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-position: right 11px center; }
+  .textarea { @apply min-h-[78px] resize-y; }
+  .input[readonly] { @apply bg-surface-2 text-ink-2; }
+  .input[type="file"] { @apply cursor-pointer py-1.5 text-ink-2; }
+  .input::file-selector-button { @apply mr-3 cursor-pointer rounded-[7px] border border-line-strong bg-surface-2 px-2.5 py-[3px] text-xs font-semibold text-ink transition-[background] duration-150; }
+  .input[type="file"]:hover::file-selector-button { @apply bg-surface-3; }
+  .is-invalid { border-color: var(--color-danger) !important; }
+  .error-text { @apply mt-[5px] text-xs text-danger; }
+  .hint { @apply mt-[5px] text-xs text-ink-2; }
+  .choice { @apply flex cursor-pointer items-center gap-2 rounded-sm border border-line-strong bg-surface px-3.5 py-[9px] transition-[border-color,background] duration-150; }
+  .choice:has(input:checked) { @apply border-brand bg-brand-soft font-semibold text-brand-hover; }
+  .choice input, .checkbox input { accent-color: var(--color-brand); }
+  .choice.is-disabled { @apply cursor-not-allowed opacity-55; }
+  .checkbox { @apply flex items-start gap-2 [&>input]:mt-[3px]; }
+  .qty-input { @apply flex items-stretch; }
+  .qty-input .input { @apply min-w-0 rounded-r-none; }
+  .qty-input .unit { @apply grid place-items-center whitespace-nowrap rounded-r-sm border border-l-0 border-line-strong bg-surface-2 px-[11px] text-sm text-ink-2; }
+  .just-filled { @apply animate-just-filled; }
+  .chip { @apply cursor-pointer rounded-full border border-line-strong bg-surface px-[11px] py-[5px] text-xs font-medium text-ink-2 hover:border-brand hover:text-brand hover:no-underline; }
+  .chip-active { @apply border-brand bg-brand-soft text-brand; }
+
+  /* Cards */
+  .card { @apply mb-5 overflow-hidden rounded-lg border border-line bg-surface shadow-card; }
+  .card-head { @apply flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-[15px] max-md:px-4; }
+  .card-title { @apply text-md font-[650] tracking-[-0.01em]; }
+  .card-sub { @apply text-sm text-ink-2; }
+  .card-body { @apply p-5 max-md:px-4; }
+  .card-foot { @apply border-t border-line bg-surface-2 px-5 py-3 max-md:px-4; }
+
+  /* Tables */
+  .table { @apply w-full border-collapse; }
+  .table th { @apply whitespace-nowrap border-b border-line bg-surface-2 px-4 py-2.5 text-left text-[11.5px] font-semibold uppercase tracking-[.04em] text-ink-2; }
+  .table td { @apply border-b border-line px-4 py-3 align-middle; }
+  .table tbody tr:last-child td { @apply border-b-0; }
+  .table tbody tr:hover { background: #fdfaf6; }
+  .table .num { @apply whitespace-nowrap text-right tabular-nums; }
+  .table .actions { @apply whitespace-nowrap text-right; }
+  .table tfoot td { @apply border-t border-line bg-surface-2 font-[650]; }
+  .row-link { @apply font-semibold text-ink hover:text-brand; }
+  .cell-sub { @apply mt-px block text-xs text-ink-2; }
+  .row-muted td { @apply text-ink-3; }
+  /* On a phone a table turns into stacked rows; td[data-label] prints its label first. */
+  @media (width < 48rem) {
+    .table.rwd, .table.rwd tbody, .table.rwd tfoot { display: block; }
+    .table.rwd thead { display: none; }
+    .table.rwd tbody tr { @apply flex flex-wrap items-center gap-x-3.5 gap-y-1 border-b border-line px-4 py-3 last:border-b-0; }
+    .table.rwd tbody td { @apply block border-0 p-0; }
+    .table.rwd td.primary { @apply order-first flex-[1_1_100%]; }
+    .table.rwd td.num, .table.rwd td.actions { @apply ml-auto; }
+    .table.rwd td.num:not(.max-md\:hidden) ~ td.num, .table.rwd td.num:not(.max-md\:hidden) ~ td.actions { @apply ml-0; }
+    .table.rwd td[data-label]::before { content: attr(data-label) " "; @apply text-xs font-normal text-ink-2; }
+    .table.rwd td.strong-sm { @apply font-semibold; }
+    .table.rwd tfoot tr { @apply flex justify-between gap-3 border-t border-line bg-surface-2 px-4 py-3; }
+    .table.rwd tfoot td { @apply border-0 bg-transparent p-0; }
+    .table.rwd tfoot td:empty { display: none; }
+  }
+
+  /* Badges (status pills) */
+  .badge { @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-surface-3 px-2.5 py-[5px] text-[12px] leading-none font-semibold text-ink-2; }
+  .badge::before { content: ""; @apply size-1.5 rounded-full bg-current opacity-80; }
+  .badge.plain::before { display: none; }
+  .b-success { @apply bg-success-soft text-success; }
+  .b-warning { @apply bg-warning-soft text-warning; }
+  .b-danger { @apply bg-danger-soft text-danger; }
+  .b-info { @apply bg-info-soft text-info; }
+  .b-violet { @apply bg-violet-soft text-violet; }
+  .b-orange { @apply bg-orange-soft text-orange; }
+  .b-neutral { @apply bg-surface-3 text-ink-2; }
+
+  /* Tabs (status filters on lists) */
+  .tabs { @apply flex gap-0.5 overflow-x-auto border-b border-line bg-surface px-3; }
+  .tab { @apply -mb-px inline-flex items-center gap-[7px] whitespace-nowrap border-b-2 border-transparent px-[11px] pt-[13px] pb-[11px] font-semibold text-ink-2 hover:text-ink hover:no-underline; }
+  .tab.active { @apply border-brand text-brand; }
+  .tab .n { @apply rounded-full bg-surface-3 px-[7px] text-2xs leading-[18px] font-bold text-ink-2; }
+  .tab.active .n { @apply bg-brand text-white; }
+  /* Sub-navigation pills (Inventory pages, Orders/Payments, Order/Payments) */
+  .subnav { @apply mb-[18px] inline-flex max-w-full gap-1 overflow-x-auto rounded-[12px] bg-surface-3 p-1; }
+  .subnav a, .subnav button { @apply cursor-pointer whitespace-nowrap rounded-sm border-0 bg-transparent px-4 py-2 text-[13.5px] font-semibold text-ink-2 hover:text-ink hover:no-underline focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-ring; }
+  .subnav .active { @apply bg-surface text-ink shadow-[0_1px_3px_rgba(31,21,17,0.14)]; }
+
+  /* Pagination */
+  .pager { @apply flex flex-wrap items-center justify-between gap-2.5 border-t border-line bg-surface-2 px-5 py-3; }
+  .pager-info { @apply text-sm text-ink-2; }
+  .pager-links { @apply flex gap-1; }
+  .pager-links a, .pager-links span { @apply inline-grid h-8 min-w-8 place-items-center rounded-[8px] border border-line bg-surface px-2 text-sm text-ink-2; }
+  .pager-links a:hover { @apply bg-surface-3 no-underline; }
+  .pager-links .current { @apply border-brand bg-brand text-white; }
+  .pager-links .disabled { @apply opacity-45; }
+
+  /* Alerts and empty states */
+  .alert { @apply mb-[18px] flex items-start gap-2.5 rounded-sm border border-transparent px-4 py-3; }
+  .alert-success { @apply border-[#bfe8cd] bg-success-soft text-[#14532d]; }
+  .alert-error { @apply border-[#f4c2c7] bg-danger-soft text-[#7f1d1d]; }
+  .alert-info { @apply border-[#c5d6f8] bg-info-soft text-[#1e3a8a]; }
+  .alert-warning { @apply border-[#f4dfae] bg-warning-soft text-[#713f12]; }
+  .alert-close { @apply cursor-pointer border-0 bg-transparent text-[18px] leading-none opacity-60; }
+  .empty { @apply px-[18px] py-10 text-center text-ink-2; }
+  .empty::before { content: ""; @apply mx-auto mb-3 block size-[52px] rounded-full bg-surface-3 bg-center bg-no-repeat; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a2968f' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 10h16l-1.5 9.5a1 1 0 0 1-1 .5h-11a1 1 0 0 1-1-.5z'/%3E%3Cpath d='M7 10V7a5 5 0 0 1 10 0v3'/%3E%3C/svg%3E"); background-size: 24px; }
+  .empty strong { @apply mb-1 block text-md text-ink; }
+
+  /* Modals (native <dialog>) */
+  dialog.modal { @apply m-auto w-[min(580px,calc(100vw-24px))] max-h-[calc(100vh-32px)] rounded-xl border-0 bg-surface p-0 text-ink shadow-pop open:animate-modal-in; }
+  dialog.modal.wide { @apply w-[min(740px,calc(100vw-24px))]; }
+  dialog.modal::backdrop { background: rgba(42, 26, 33, 0.5); backdrop-filter: blur(2px); }
+  .modal-head { @apply flex items-center justify-between border-b border-line px-[22px] py-[18px]; }
+  .modal-title { @apply text-lg font-bold tracking-[-0.01em]; }
+  .modal-body { @apply max-h-[calc(100vh-190px)] overflow-y-auto px-[22px] py-5; }
+  .modal-foot { @apply flex justify-end gap-2 border-t border-line bg-surface-2 px-[22px] py-3.5; }
+
+  /* Key-value details and money rows */
+  .kv { @apply m-0 grid grid-cols-[minmax(84px,max-content)_minmax(0,1fr)] gap-x-4 gap-y-[9px] max-md:grid-cols-1 max-md:gap-y-0.5; }
+  .kv dt { @apply text-ink-2; }
+  .kv dd { @apply m-0 font-medium [overflow-wrap:anywhere] max-md:mb-2; }
+  .money { @apply grid gap-[9px]; }
+  .money-row { @apply flex justify-between gap-3 tabular-nums; }
+  .money-row.total { @apply border-t border-line pt-[11px] text-[16px] font-bold; }
+
+  /* Repeatable lines (stock in, adjustments, ingredients used) */
+  .line { @apply grid items-start gap-2.5 rounded-sm border border-line bg-surface-2 p-3 [&_.field]:mb-0; }
+
+  /* Order progress (timeline) */
+  .steps { @apply flex flex-wrap max-md:flex-col; }
+  .step { @apply relative min-w-[110px] flex-1 pt-5 text-xs text-ink-3 max-md:min-w-0 max-md:pt-0 max-md:pb-3 max-md:pl-[26px] max-md:last:pb-0; }
+  .step::before { content: ""; @apply absolute top-1.5 right-0 left-0 h-0.5 bg-line max-md:top-3.5 max-md:-bottom-[3px] max-md:right-auto max-md:left-1.5 max-md:h-auto max-md:w-0.5 max-md:last:hidden; }
+  .step::after { content: ""; @apply absolute top-0 left-0 size-3.5 rounded-full border-2 border-line-strong bg-surface max-md:top-[3px]; }
+  .step.done { @apply text-ink-2; }
+  .step.done::before { @apply bg-brand; }
+  .step.done::after { @apply border-brand bg-brand; }
+  .step.current { @apply font-[650] text-ink; }
+  .step.current::after { @apply border-brand bg-brand-soft ring-4 ring-brand-ring; }
+  .step.done.current::after { @apply border-brand bg-brand; }
+
+  /* Sidebar links */
+  .nav-link { @apply flex items-center gap-[11px] rounded-[10px] px-3 py-[9px] font-medium text-side-text opacity-85 transition-[background,opacity] duration-150 hover:bg-white/6 hover:opacity-100 hover:no-underline [&_.icon]:opacity-80; }
+  .nav-link.active { @apply bg-side-active text-white opacity-100 shadow-[inset_3px_0_0_var(--color-brand)] [&_.icon]:text-brand-pink [&_.icon]:opacity-100; }
+
+  /* Drop-down menu ("More") */
+  .menu-list { @apply absolute top-[calc(100%+6px)] right-0 z-40 hidden min-w-[190px] rounded-[12px] border border-line bg-surface p-1.5 shadow-menu; }
+  .menu.open .menu-list { @apply block; }
+  .menu-list button { @apply flex w-full cursor-pointer items-center gap-[9px] rounded-[8px] border-0 bg-transparent px-3 py-[9px] text-left font-semibold text-ink hover:bg-surface-2 [&_.icon]:size-4 [&_.icon]:text-ink-2; }
+  .menu-list button.danger { @apply text-danger hover:bg-[#fdf0f1] [&_.icon]:text-danger; }
+
+  /* Maps (Leaflet, drawn by the React AddressPicker and PinMap) */
+  .map-box { @apply relative z-0 rounded-sm border border-line-strong bg-[#ebe6de]; }
+  .map-pin { @apply border-0 bg-transparent; filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25)); }
+  .leaflet-container { font: inherit; }
+  .leaflet-bar a { @apply text-ink; }
+}
+
+/* ---------- 4. Printing: order slips, job order sheets, receipts, reports ---------- */
+@media print {
+  body { @apply bg-white text-[12px]; }
+  .card { @apply shadow-none break-inside-avoid; }
+  .pager { @apply border-0 bg-transparent px-0 pt-2 pb-0; }
+  .pager-links, .tabs, .subnav, .menu, .alert, .map-box { display: none !important; }
+}
+/* Preflight hides [hidden] with !important inside @layer base, so the print override has to live in that layer too */
+@layer base {
+  @media print {
+    [data-tab-panel][hidden] { display: block !important; }
+  }
+}
